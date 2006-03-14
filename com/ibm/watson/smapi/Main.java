@@ -18,21 +18,40 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		MAIN_JAVA_CLASS = args[0];
-		smapify(MAIN_JAVA_CLASS, null);
+		smapify(MAIN_JAVA_CLASS, null, null);
 	}
 	
-	public static void smapify(String filename, String pathPrefix){
+	/*
+	 * filename: the name of the file, possibly with path information
+	 * relPathPrefix: the portion of the filename we wish to conserve
+	 * outputfile: the output filename
+	 * e.g.:
+	 * filename: C:/foo/bar/bla.x
+	 * relPathPrefix: bar  
+	 * ouputfile: C:/foo/bin/bar/bla.class
+	 * information in SMAP becomes: bar/bla.x
+	 */
+	public static void smapify(String filename, String relPathPrefix, String outputfile){
 		String prefix = removeExt(filename);
 	
+		System.out.println("smapify filename: " + filename);
+		System.out.println("with relPathPrefix: " + relPathPrefix);
+		System.out.println("and outputfile: " + outputfile);
 		
-		String smap = SmapBuilder.get(prefix, pathPrefix, LineMapBuilder.get(prefix));
+		LineMapBuilder lmb = new LineMapBuilder(prefix);
+		String smap = SmapBuilder.get(prefix, relPathPrefix, lmb.get());
 	
 		System.out.println(smap);
 	
 		
 		try {
 			OfflineInstrumenter oi = new OfflineInstrumenter();
-			File input = new File(prefix + ".class");
+			String inputName = null;
+			if (outputfile == null)
+				inputName = prefix + ".class";
+			else 
+				inputName = outputfile;
+			File input = new File(inputName);
 			oi.addInputClass(input);
 			oi.beginTraversal();
 			ClassInstrumenter ci = oi.nextClass();
@@ -70,7 +89,7 @@ public class Main {
 			SourceDebugExtensionWriter sw = new SourceDebugExtensionWriter(w);
 			sw.setDebugInfo(smap);
 			w.addClassAttribute(sw);
-			FileOutputStream fw = new FileOutputStream(new File(prefix + ".class"));
+			FileOutputStream fw = new FileOutputStream(new File(inputName));
 			fw.write(w.makeBytes());
 			fw.close();
 		} catch (Exception e){

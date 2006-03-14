@@ -5,13 +5,34 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class LineMapBuilder {
 
 	static String LINE = "//#line "; 
+	String filename;
+
+	ArrayList /*LineElem*/ arraylist;
+	Map /*integer -> LineElem*/ map;
 	
-	public static ArrayList /* LineElem */ get(String filename) {
-		ArrayList result = new ArrayList();
+	
+	public LineMapBuilder(String filename){
+		this.filename = filename;
+		build();
+	}
+	
+	public ArrayList get() {
+		return arraylist;
+	}
+	
+	public Map getLineMap(){
+		return map;
+	}
+	
+	private void /* LineElem */ build() {
+		arraylist = new ArrayList();
+		map = new HashMap();
 		try {
 			LineNumberReader ln = new LineNumberReader(new FileReader(filename + ".java"));
 			String line = null;
@@ -21,7 +42,9 @@ public class LineMapBuilder {
 			while((line = ln.readLine()) != null){
 				if (line.startsWith(LINE)){
 					if (x10 != -1){
-						result.add(new LineElem(x10, javaStart, javaEnd - javaStart));
+						LineElem le = new LineElem(x10, javaStart, javaEnd - javaStart);
+						arraylist.add(le);
+						map.put(new Integer(x10), le);
 					}
 					x10 = getNumber(line);
 					javaStart = ln.getLineNumber() + 1;
@@ -32,7 +55,9 @@ public class LineMapBuilder {
 				}
 			}
 			if (x10 != -1){
-				result.add(new LineElem(x10, javaStart, javaEnd - javaStart));
+				LineElem le = new LineElem(x10, javaStart, javaEnd - javaStart);
+				arraylist.add(le);
+				map.put(new Integer(x10), le);
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -41,9 +66,9 @@ public class LineMapBuilder {
 			System.err.println(e);
 		}
 		
-		return result;
-		
 	}
+	
+	
 	
 	private static int getNumber(String line){
 		String[] lines = line.split(LINE);
