@@ -36,28 +36,28 @@ public class LineMapBuilder {
 		try {
 			LineNumberReader ln = new LineNumberReader(new FileReader(filename + ".java"));
 			String line = null;
-			int x10 = -1;
+			int origSrcLine = -1;
 			int javaStart = -1;
 			int javaEnd = -1;
 			while((line = ln.readLine()) != null){
 				if (line.startsWith(LINE)){
-					if (x10 != -1){
-						LineElem le = new LineElem(x10, javaStart, javaEnd - javaStart);
+					if (origSrcLine != -1){
+						LineElem le = new LineElem(origSrcLine, javaStart, javaEnd - javaStart);
 						arraylist.add(le);
-						map.put(new Integer(x10), le);
+						map.put(new Integer(origSrcLine), le);
 					}
-					x10 = getNumber(line);
+					origSrcLine = getNumber(line);
 					javaStart = ln.getLineNumber() + 1;
 					javaEnd = javaStart;
 				} else {
-					if (x10 != -1)
+					if (origSrcLine != -1)
 						javaEnd++;
 				}
 			}
-			if (x10 != -1){
-				LineElem le = new LineElem(x10, javaStart, javaEnd - javaStart);
+			if (origSrcLine != -1){
+				LineElem le = new LineElem(origSrcLine, javaStart, javaEnd - javaStart);
 				arraylist.add(le);
-				map.put(new Integer(x10), le);
+				map.put(new Integer(origSrcLine), le);
 			}
 			
 		} catch (FileNotFoundException e) {
