@@ -33,16 +33,16 @@ public class Main {
 	 */
 	public static void smapify(String filename, String relPathPrefix, String outputfile){
 		String prefix = removeExt(filename);
+                String origExten = filename.substring(filename.lastIndexOf('.')+1);
 	
 		System.out.println("smapify filename: " + filename);
 		System.out.println("with relPathPrefix: " + relPathPrefix);
 		System.out.println("and outputfile: " + outputfile);
 		
 		LineMapBuilder lmb = new LineMapBuilder(prefix);
-		String smap = SmapBuilder.get(prefix, relPathPrefix, lmb.get());
+		String smap = SmapBuilder.get(prefix, relPathPrefix, lmb.get(), origExten);
 	
 		System.out.println(smap);
-	
 		
 		try {
 			OfflineInstrumenter oi = new OfflineInstrumenter();
@@ -66,7 +66,6 @@ public class Main {
 			w.setInterfaceNames(cr.getInterfaceNames());
 	     
 			ClassReader.AttrIterator iter = new ClassReader.AttrIterator();
-
 			
 		
 			int fieldCount = cr.getFieldCount();	
@@ -122,5 +121,4 @@ public class Main {
 		int end = offset + iter.getRawSize();
 		return new ClassWriter.RawElement(cr.getBytes(), offset, end - offset);
 	}
-
 }
