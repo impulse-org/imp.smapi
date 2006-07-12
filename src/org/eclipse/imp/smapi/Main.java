@@ -2,9 +2,11 @@ package com.ibm.watson.smapi;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 import com.ibm.shrikeBT.shrikeCT.ClassInstrumenter;
 import com.ibm.shrikeBT.shrikeCT.OfflineInstrumenter;
+import com.ibm.shrikeBT.shrikeCT.tools.ClassPrinter;
 import com.ibm.shrikeCT.ClassReader;
 import com.ibm.shrikeCT.ClassWriter;
 import com.ibm.shrikeCT.SourceDebugExtensionWriter;
@@ -12,13 +14,13 @@ import com.ibm.shrikeCT.ClassReader.AttrIterator;
 
 public class Main {
 
-	static String MAIN_JAVA_CLASS;
+	static String MAIN_CLASS;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MAIN_JAVA_CLASS = args[0];
-		smapify(MAIN_JAVA_CLASS, null, null);
+		MAIN_CLASS = args[0];
+		smapify(MAIN_CLASS, null, null);
 	}
 	
 	/*
@@ -33,10 +35,11 @@ public class Main {
 	 */
 	public static void smapify(String filename, String relPathPrefix, String outputfile){
 		String prefix = removeExt(filename);
-                String origExten = filename.substring(filename.lastIndexOf('.')+1);
+        String origExten = filename.substring(filename.lastIndexOf('.')+1);
 	
+        System.out.println("origExten=" + origExten);
 		System.out.println("smapify filename: " + filename);
-		System.out.println("with relPathPrefix: " + relPathPrefix);
+		System.out.println("with pathPrefix: " + relPathPrefix);
 		System.out.println("and outputfile: " + outputfile);
 		
 		LineMapBuilder lmb = new LineMapBuilder(prefix);
@@ -91,6 +94,10 @@ public class Main {
 			FileOutputStream fw = new FileOutputStream(new File(inputName));
 			fw.write(w.makeBytes());
 			fw.close();
+			oi.close();
+			
+			
+			
 		} catch (Exception e){
 			System.err.println(e);
 		}
@@ -98,13 +105,8 @@ public class Main {
 	}
 	
 	private static String removeExt(String filename){
-		if (filename.endsWith(".java")){
-			String[] s = filename.split(".java");
-			return s[0];
-		} else {
-			System.err.println("File " + filename + " is not a Java file.");
-		}
-		return null;
+		int i = filename.lastIndexOf(".");
+		return filename.substring(0,i);
 	}
 	
 	private static ClassWriter.Element[] collectAttributes(ClassReader cr, AttrIterator iter) throws Exception {

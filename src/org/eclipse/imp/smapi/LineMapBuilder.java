@@ -30,7 +30,7 @@ public class LineMapBuilder {
 		return map;
 	}
 	
-	private void /* LineElem */ build() {
+	private void build() {
 		arraylist = new ArrayList();
 		map = new HashMap();
 		try {

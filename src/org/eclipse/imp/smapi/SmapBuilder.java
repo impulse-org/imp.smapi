@@ -1,5 +1,6 @@
 package com.ibm.watson.smapi;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,23 +16,31 @@ public class SmapBuilder {
         String name= filename;
         boolean path= false;
         if (filename.indexOf("/") != -1) { // path name included
-            int i= filename.lastIndexOf("/");
-            name= filename.substring(i + 1);
-            filename= filename.substring(pathPrefix.length());
-            System.out.println("filename = " + filename);
+            name= filename.substring(filename.lastIndexOf("/") + 1);
+            if (pathPrefix != null)
+            	filename = filename.substring(pathPrefix.length() + 1);
+            
+            
+           
+            filename = replaceAll(filename, File.separator);
+          
+            
             path= true;
         }
-
+        
+        
+   
         String info= "SMAP\n";
         info+= name + ".java\n";
         info+= fileExten + "\n";
-        info+= "*S " + fileExten + "\n";
+        info+= "*S " + fileExten + "\n"; 
         info+= "*F\n";
         if (path)
             info+= "+ ";
         info+= "1 " + name + "." + fileExten + "\n";
         if (path)
-            info+= filename + "." + fileExten + "\n";
+        	info+= filename + "." + fileExten + "\n";
+        
         info+= "*L\n";
 
         for(Iterator t= elems.iterator(); t.hasNext();) {
@@ -41,5 +50,17 @@ public class SmapBuilder {
 
         info+= "*E\n";
         return info;
+    }
+    
+    static String replaceAll(String filename, String sep){
+    	String ret = "";
+    	String[] names = filename.split("/");
+    	for(int i = 0; i < names.length; i++ ){
+    		if (i == 0)
+    			ret = names[0];
+    		else
+    			ret += sep+ names[i];
+    	}
+    	return ret;
     }
 }
