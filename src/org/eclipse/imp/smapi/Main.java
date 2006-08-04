@@ -2,24 +2,21 @@ package com.ibm.watson.smapi;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
-
 import com.ibm.shrikeBT.shrikeCT.ClassInstrumenter;
 import com.ibm.shrikeBT.shrikeCT.OfflineInstrumenter;
-import com.ibm.shrikeBT.shrikeCT.tools.ClassPrinter;
 import com.ibm.shrikeCT.ClassReader;
 import com.ibm.shrikeCT.ClassWriter;
 import com.ibm.shrikeCT.SourceDebugExtensionWriter;
 import com.ibm.shrikeCT.ClassReader.AttrIterator;
 
 public class Main {
+    	public static boolean debug= false;
 
-	static String MAIN_CLASS;
-	/**
+    	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MAIN_CLASS = args[0];
+		String MAIN_CLASS = args[0];
 		smapify(MAIN_CLASS, null, null);
 	}
 	
@@ -35,17 +32,20 @@ public class Main {
 	 */
 	public static void smapify(String filename, String relPathPrefix, String outputfile){
 		String prefix = removeExt(filename);
-        String origExten = filename.substring(filename.lastIndexOf('.')+1);
-	
-        System.out.println("origExten=" + origExten);
-		System.out.println("smapify filename: " + filename);
-		System.out.println("with pathPrefix: " + relPathPrefix);
-		System.out.println("and outputfile: " + outputfile);
+		String origExten = filename.substring(filename.lastIndexOf('.')+1);
+
+		if (debug) {
+			System.out.println("origExten=" + origExten);
+			System.out.println("smapify filename: " + filename);
+			System.out.println("with pathPrefix: " + relPathPrefix);
+			System.out.println("and outputfile: " + outputfile);
+		}
 		
 		LineMapBuilder lmb = new LineMapBuilder(prefix);
 		String smap = SmapBuilder.get(prefix, relPathPrefix, lmb.get(), origExten);
-	
-		System.out.println(smap);
+
+		if (debug)
+			System.out.println(smap);
 		
 		try {
 			OfflineInstrumenter oi = new OfflineInstrumenter();
