@@ -5,5 +5,6 @@ Bundle-SymbolicName: com.ibm.watson.smapi
 Bundle-Version: 1.0.27
 Bundle-Localization: plugin
 Export-Package: com.ibm.watson.smapi
-Require-Bundle: com.ibm.shrike
+Require-Bundle: com.ibm.shrike,
+ org.junit
 Bundle-Vendor: mvaziri@us.ibm.com
