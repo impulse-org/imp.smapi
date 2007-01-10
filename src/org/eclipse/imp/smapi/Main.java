@@ -2,12 +2,12 @@ package com.ibm.watson.smapi;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import com.ibm.shrikeBT.shrikeCT.ClassInstrumenter;
-import com.ibm.shrikeBT.shrikeCT.OfflineInstrumenter;
-import com.ibm.shrikeCT.ClassReader;
-import com.ibm.shrikeCT.ClassWriter;
-import com.ibm.shrikeCT.SourceDebugExtensionWriter;
-import com.ibm.shrikeCT.ClassReader.AttrIterator;
+import com.ibm.wala.shrikeBT.shrikeCT.ClassInstrumenter;
+import com.ibm.wala.shrikeBT.shrikeCT.OfflineInstrumenter;
+import com.ibm.wala.shrikeCT.ClassReader;
+import com.ibm.wala.shrikeCT.ClassWriter;
+import com.ibm.wala.shrikeCT.SourceDebugExtensionWriter;
+import com.ibm.wala.shrikeCT.ClassReader.AttrIterator;
 
 public class Main {
     	public static boolean debug= false;
