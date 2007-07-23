@@ -6,5 +6,5 @@ Bundle-Version: 1.0.56
 Bundle-Localization: plugin
 Export-Package: com.ibm.watson.smapi
 Require-Bundle: org.junit,
- com.ibm.shrike
+ com.ibm.wala.shrike
 Bundle-Vendor: mvaziri@us.ibm.com
