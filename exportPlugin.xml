@@ -5,7 +5,7 @@
 
 	<target name="init" depends="properties">
 		<property name="plugin.name" value="com.ibm.watson.smapi"/>
-		<property name="plugin.version" value="${runtime.version}"/>
+		<property name="plugin.version" value="${plugins.version.31}"/>
 		<property name="plugin.jar.name" value="${plugin.name}_${plugin.version}.jar"/>
 		<property name="plugin.zip.name" value="${plugin.name}_${plugin.version}.zip"/>
 		<property name="plugin.src.zip" value="${plugin.name}src.zip"/>
@@ -35,7 +35,7 @@
 		<javac destdir="${temp.folder}/${plugin.jar.name}.bin" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bootclasspath}" source="${javacSource}" target="${javacTarget}"		>
 			<compilerarg line="${compilerArg}"/>
 			<classpath>
-				<pathelement path="../com.ibm.shrike/com.ibm.shrike_${plugin.version}.jar"/>
+				<pathelement path="../com.ibm.wala.shrike/com.ibm.wala.shrike_1.0.0.jar"/>
 				<pathelement path="${eclipse.build.path}"/>
 			</classpath>
 			<src path="src/"/>
