@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ibm.watson.smapi;
+package org.eclipse.imp.smapi;
 
 public class LineElem {
     int origSrcStart;

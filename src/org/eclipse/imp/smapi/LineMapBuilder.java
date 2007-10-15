@@ -1,4 +1,4 @@
-package com.ibm.watson.smapi;
+package org.eclipse.imp.smapi;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,8 +13,8 @@ public class LineMapBuilder {
 	static String LINE = "//#line "; 
 	String filename;
 
-	ArrayList /*LineElem*/ arraylist;
-	Map /*integer -> LineElem*/ map;
+	ArrayList<LineElem> arraylist;
+	Map<Integer,LineElem> map;
 	
 	
 	public LineMapBuilder(String filename){
@@ -31,8 +31,8 @@ public class LineMapBuilder {
 	}
 	
 	private void build() {
-		arraylist = new ArrayList();
-		map = new HashMap();
+		arraylist = new ArrayList<LineElem>();
+		map = new HashMap<Integer, LineElem>();
 		try {
 			LineNumberReader ln = new LineNumberReader(new FileReader(filename + ".java"));
 			String line = null;

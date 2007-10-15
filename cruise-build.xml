@@ -1,4 +1,4 @@
-<project name="com.ibm.watson.smapi" default="all">
+<project name="org.eclipse.imp.smapi" default="all">
     <target name="all" depends="compile, test, publish"/>
 
     <target name="compile">

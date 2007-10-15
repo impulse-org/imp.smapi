@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="com.ibm.watson.smapi" default="build.update.jar" basedir=".">
+<project name="org.eclipse.imp.smapi" default="build.update.jar" basedir=".">
 	<import file="../org.eclipse.imp.runtime.feature/buildCommon.xml"/>
 	<import file="../org.eclipse.imp.update/buildPluginCommon.xml"/>
 
 	<target name="init" depends="properties">
-		<property name="plugin.name" value="com.ibm.watson.smapi"/>
+		<property name="plugin.name" value="org.eclipse.imp.smapi"/>
 		<property name="plugin.version" value="${plugins.version.31}"/>
 		<property name="plugin.jar.name" value="${plugin.name}_${plugin.version}.jar"/>
 		<property name="plugin.zip.name" value="${plugin.name}_${plugin.version}.zip"/>

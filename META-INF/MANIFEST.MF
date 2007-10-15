@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SMAP support
-Bundle-SymbolicName: com.ibm.watson.smapi
+Bundle-SymbolicName: org.eclipse.imp.smapi
 Bundle-Version: 1.0.66
 Bundle-Localization: plugin
-Export-Package: com.ibm.watson.smapi
+Export-Package: org.eclipse.imp.smapi
 Require-Bundle: org.junit,
  com.ibm.wala.shrike
 Bundle-Vendor: mvaziri@us.ibm.com

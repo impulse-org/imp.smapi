@@ -1,4 +1,4 @@
-package com.ibm.watson.smapi;
+package org.eclipse.imp.smapi;
 
 import java.io.File;
 import java.io.FileOutputStream;
