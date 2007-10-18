@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SMAP support
 Bundle-SymbolicName: org.eclipse.imp.smapi
-Bundle-Version: 1.0.66
+Bundle-Version: 1.0.68
 Bundle-Localization: plugin
 Export-Package: org.eclipse.imp.smapi
 Require-Bundle: org.junit,
