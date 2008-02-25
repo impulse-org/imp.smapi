@@ -2,7 +2,7 @@
 <version pluginID="org.eclipse.imp.smapi"
          versionID="1.0.72">
     <file path="/org.eclipse.imp.smapi/META-INF/MANIFEST.MF"
-          version="1.59"/>
+          version="1.60"/>
     <file path="/org.eclipse.imp.smapi/plugin.xml"
           version="1.1"/>
     <file path="/org.eclipse.imp.smapi/src/org/eclipse/imp/smapi/LineElem.java"
