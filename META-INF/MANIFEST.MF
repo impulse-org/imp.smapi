@@ -4,6 +4,7 @@ Bundle-Name: SMAP support (Incubation)
 Bundle-SymbolicName: org.eclipse.imp.smapi
 Bundle-Version: 1.0.72
 Bundle-Localization: plugin
+Eclipse-LazyStart: true
 Export-Package: org.eclipse.imp.smapi
 Require-Bundle: org.junit,
  com.ibm.wala.shrike
