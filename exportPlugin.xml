@@ -15,7 +15,7 @@
 			   source="${javacSource}" target="${javacTarget}">
 			<compilerarg line="${compilerArg}"/>
 			<classpath>
-				<pathelement path="$(plugin.dependencies}"/>
+				<pathelement path="${plugin.dependencies}"/>
 				<pathelement path="${eclipse.build.path}"/>
 			</classpath>
 			<src path="src/"/>
