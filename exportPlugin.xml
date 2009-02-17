@@ -20,7 +20,7 @@
 			</classpath>
 			<src path="src/"/>
 		</javac>
-		<!-- Copy necessary resources -->
+		<!-- Copy all necessary resources -->
 		<copy todir="${temp.folder}/${plugin.jar.name}.bin" failonerror="true" overwrite="false">
 			<fileset dir="src/" excludes="**/*.java,**/package.htm*"/>
 		</copy>
