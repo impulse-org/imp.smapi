@@ -7,20 +7,16 @@
 *
 * Contributors:
 *    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
-
 *******************************************************************************/
 
-/**
- * 
- */
 package org.eclipse.imp.smapi;
 
 public class LineElem {
-    int origSrcStart;
+    private int origSrcStart;
 
-    int javaStart;
+    private int javaStart;
 
-    int incr;
+    private int incr;
 
     public LineElem(int origSrcStart, int javaStart, int incr) {
         this.origSrcStart= origSrcStart;
