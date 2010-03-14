@@ -74,7 +74,7 @@ public class Main {
 
 			copyClassProperties(cr, w);
 			copyMembersAndAttributes(cr, w);
-			addSMAPAttribue(smap, w);
+			addSMAPAttribute(smap, w);
 
 			FileOutputStream fw = new FileOutputStream(new File(inputName));
 			fw.write(w.makeBytes());
@@ -117,7 +117,7 @@ public class Main {
         }
     }
 
-    private static void addSMAPAttribue(String smap, ClassWriter w) {
+    private static void addSMAPAttribute(String smap, ClassWriter w) {
         SourceDebugExtensionWriter sw = new SourceDebugExtensionWriter(w);
         sw.setDebugInfo(smap);
         w.addClassAttribute(sw);
