@@ -43,8 +43,9 @@ public class LineMapBuilder {
     private void build() {
         fLineElems= new ArrayList<LineElem>();
         fLineMap= new HashMap<Integer, LineElem>();
+        LineNumberReader ln = null;
         try {
-            LineNumberReader ln= new LineNumberReader(new FileReader(fFileName + ".java"));
+            ln= new LineNumberReader(new FileReader(fFileName + ".java"));
             String line= null;
             int origSrcLine= -1;
             int javaStart= -1;
@@ -76,6 +77,14 @@ public class LineMapBuilder {
 //          System.err.println(e);
         } catch (IOException e) {
             System.err.println(e);
+        } finally {
+        	if (ln != null) {
+        		try {
+					ln.close();
+				} catch (IOException e) {
+				    System.err.println(e); // TODO do something more sensible - but this plugin doesn't have an activator from which to get the log
+				}
+        	}
         }
     }
 

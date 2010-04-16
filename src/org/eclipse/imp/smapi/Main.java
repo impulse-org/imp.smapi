@@ -14,6 +14,8 @@ package org.eclipse.imp.smapi;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.ibm.wala.shrikeBT.shrikeCT.ClassInstrumenter;
 import com.ibm.wala.shrikeBT.shrikeCT.OfflineInstrumenter;
 import com.ibm.wala.shrikeCT.ClassReader;
@@ -62,10 +64,12 @@ public class Main {
 		if (debug)
 			System.out.println(smap);
 		
+		FileOutputStream fw = null;
+		OfflineInstrumenter oi = null;
 		try {
 			String inputName = (outputfile == null) ? prefix + ".class" : outputfile;
 			File input = new File(inputName);
-            OfflineInstrumenter oi = new OfflineInstrumenter();
+            oi = new OfflineInstrumenter();
 			oi.addInputClass(input);
 			oi.beginTraversal();
 			ClassInstrumenter ci = oi.nextClass();
@@ -76,13 +80,24 @@ public class Main {
 			copyMembersAndAttributes(cr, w);
 			addSMAPAttribute(smap, w);
 
-			FileOutputStream fw = new FileOutputStream(new File(inputName));
+			fw = new FileOutputStream(new File(inputName));
 			fw.write(w.makeBytes());
 			fw.close();
 
 			oi.close();
 		} catch (Exception e) {
 			System.err.println(e);
+		} finally {
+			try {
+			    if (fw != null) {
+			        fw.close();
+			    }
+			    if (oi != null) {
+			        oi.close();
+			    }
+			} catch (IOException e) {
+                System.err.println(e); // TODO do something more sensible - but this plugin doesn't have an activator from which to get the log
+			}
 		}
 	}
 
