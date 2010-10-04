@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SMAP support (Incubation)
 Bundle-SymbolicName: org.eclipse.imp.smapi
-Bundle-Version: 0.1.91.qualifier
+Bundle-Version: 0.2.1.qualifier
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.imp.smapi
