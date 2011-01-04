@@ -6,6 +6,6 @@ Bundle-Version: 0.2.1.qualifier
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.imp.smapi
-Require-Bundle: com.ibm.wala.shrike
+Require-Bundle: com.ibm.wala.shrike;bundle-version="[1.1.3,1.1.4)"
 Bundle-Vendor: rfuhrer@watson.ibm.com
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
