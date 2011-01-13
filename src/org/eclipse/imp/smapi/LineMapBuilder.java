@@ -19,12 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LineMapBuilder {
-    private static String LINE_INFO_COMMENT_PREFIX= "//#line ";
+    private static final String LINE_INFO_COMMENT_PREFIX= "//#line ";
+
+    private static final Pattern LINE_COMMENT_REGEXP= Pattern.compile("//#line ([0-9]+)( \"(.*)\")?");
+
     private String fFileName;
 
     private List<LineElem> fLineElems;
+
     private Map<Integer, LineElem> fLineMap;
 
     public LineMapBuilder(String filename) {
@@ -76,20 +82,24 @@ public class LineMapBuilder {
             // a .java file for one or more (error-laden) source files in a given project.
 //          System.err.println(e);
         } catch (IOException e) {
-            System.err.println(e);
+            SMAPIActivator.getInstance().logException("Exception encountered while building line map", e);
         } finally {
         	if (ln != null) {
         		try {
 					ln.close();
 				} catch (IOException e) {
-				    System.err.println(e); // TODO do something more sensible - but this plugin doesn't have an activator from which to get the log
+		            SMAPIActivator.getInstance().logException("Exception encountered while building line map", e);
 				}
         	}
         }
     }
 
     private static int getNumber(String line) {
-        String[] lines= line.split(LINE_INFO_COMMENT_PREFIX);
-        return Integer.parseInt(lines[1]);
+        Matcher m = LINE_COMMENT_REGEXP.matcher(line);
+
+        if (m.matches()) {
+            return Integer.parseInt(m.group(1));
+        }
+        throw new IllegalArgumentException("Invalid format for line comment: " + line);
     }
 }
