@@ -7,7 +7,6 @@
 *
 * Contributors:
 *    Robert Fuhrer (rfuhrer@watson.ibm.com) - initial API and implementation
-
 *******************************************************************************/
 
 package org.eclipse.imp.smapi;
@@ -32,13 +31,17 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		String MAIN_CLASS = args[0];
-		smapify(MAIN_CLASS, null, null);
+		smapify(MAIN_CLASS, null, null, null);
 	}
 
 	/**
-	 * @param filename: the name of the file, possibly with path information
-	 * @param relPathPrefix: the portion of the filename we wish to conserve
-	 * @param outputfile: the output filename
+	 * Processes the given output file to add an appropriate SMAP attribute
+	 * indicating the line mapping from the original source file to the
+	 * generated .java source file.
+	 * @param filename the name of the file, possibly with path information
+	 * @param relPathPrefix the portion of the filename we wish to conserve
+	 * @param javaFile the path to the corresponding generated java file
+	 * @param classFileName path to the output file (usually a .class file)
 	 * <br>E.g.:
 	 * <ul>
 	 * <li>filename = C:/foo/bar/bla.x
@@ -47,7 +50,7 @@ public class Main {
 	 * </ul>
 	 * information in SMAP becomes: bar/bla.x
 	 */
-	public static void smapify(String filename, String relPathPrefix, String outputfile) {
+	public static void smapify(final String filename, final String relPathPrefix, final String javaFile, String classFileName) {
 		String prefix = removeExt(filename);
 		String origExten = filename.substring(filename.lastIndexOf('.')+1);
 
@@ -55,10 +58,10 @@ public class Main {
 			System.out.println("origExten=" + origExten);
 			System.out.println("smapify filename: " + filename);
 			System.out.println("with pathPrefix: " + relPathPrefix);
-			System.out.println("and outputfile: " + outputfile);
+			System.out.println("and outputfile: " + classFileName);
 		}
 		
-		LineMapBuilder lmb = new LineMapBuilder(prefix);
+		LineMapBuilder lmb = new LineMapBuilder(removeExt(javaFile));
 		String smap = SMAPCreator.get(prefix, relPathPrefix, lmb.get(), origExten);
 
 		if (debug)
@@ -67,11 +70,13 @@ public class Main {
 		FileOutputStream fw = null;
 		OfflineInstrumenter oi = null;
 		try {
-			String inputName = (outputfile == null) ? prefix + ".class" : outputfile;
+			String inputName = (classFileName == null) ? prefix + ".class" : classFileName;
 			File input = new File(inputName);
-            oi = new OfflineInstrumenter();
+
+			oi = new OfflineInstrumenter();
 			oi.addInputClass(input);
 			oi.beginTraversal();
+
 			ClassInstrumenter ci = oi.nextClass();
 			ClassReader cr = ci.getReader();
 			ClassWriter w = new ClassWriter();
@@ -82,11 +87,8 @@ public class Main {
 
 			fw = new FileOutputStream(new File(inputName));
 			fw.write(w.makeBytes());
-			fw.close();
-
-			oi.close();
 		} catch (Exception e) {
-			System.err.println(e);
+		    SMAPIActivator.getInstance().logException("Exception encountered while rewriting .class file '" + classFileName + "'", e);
 		} finally {
 			try {
 			    if (fw != null) {
@@ -96,7 +98,7 @@ public class Main {
 			        oi.close();
 			    }
 			} catch (IOException e) {
-                System.err.println(e); // TODO do something more sensible - but this plugin doesn't have an activator from which to get the log
+	            SMAPIActivator.getInstance().logException("Exception encountered while closing .class file '" + classFileName + "'", e);
 			}
 		}
 	}
