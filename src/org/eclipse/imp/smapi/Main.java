@@ -30,8 +30,12 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String MAIN_CLASS = args[0];
-		smapify(MAIN_CLASS, null, null, null);
+	    String fileName = args[0];
+	    String relPathPrefix = args[1];
+	    String javaFile = args[2];
+	    String classFileName = args[3];
+
+	    smapify(fileName, relPathPrefix, javaFile, classFileName);
 	}
 
 	/**
